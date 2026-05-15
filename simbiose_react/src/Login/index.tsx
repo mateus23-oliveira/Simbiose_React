@@ -35,9 +35,9 @@ export default function Login() {
 
     try {
       // Fazendo a requisição real para o backend Node.js na porta 3000
-      const response = await api.post('/users/login', {
+      const response = await api.post('/auth/login', {
         email: data.email,
-        password: data.password
+        senha: data.password
       });
 
       console.log('Sucesso! Resposta da API:', response.data);
