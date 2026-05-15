@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { api } from '../services/api';
 
 // 1. Definimos o Schema de Validação com o Zod
 const loginSchema = z.object({
@@ -33,11 +34,27 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      // data.email e data.password já estão validados e tipados aqui!
-      console.log('Dados prontos para a API do Simbiose:', data);
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulando API
-    } catch (err) {
-      console.error(err);
+      // Fazendo a requisição real para o backend Node.js na porta 3000
+      const response = await api.post('/auth/login', {
+        email: data.email,
+        senha: data.password
+      });
+
+      console.log('Sucesso! Resposta da API:', response.data);
+      
+      // Quando o backend estiver 100% pronto, o código de sucesso entra aqui:
+      // Ex: localStorage.setItem('token', response.data.token);
+      // Ex: navigate('/dashboard');
+
+    } catch (err: any) {
+      console.error('Erro ao conectar com a API:', err);
+      
+      // Tratamento básico de erro para dar feedback na tela
+      if (err.response && err.response.status === 401) {
+        alert("E-mail ou senha incorretos.");
+      } else {
+        alert("Erro no servidor ou rota não encontrada. Verifique o backend.");
+      }
     } finally {
       setIsLoading(false);
     }
