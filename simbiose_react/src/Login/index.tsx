@@ -42,19 +42,22 @@ export default function Login() {
 
       console.log('Sucesso! Resposta da API:', response.data);
       
-      // Quando o backend estiver 100% pronto, o código de sucesso entra aqui:
-      // Ex: localStorage.setItem('token', response.data.token);
+
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userRole', response.data.usuario.role);
       // Ex: navigate('/dashboard');
 
-    } catch (err: any) {
+    } catch (err) {      
+      const erroAxios = err as { response?: { status: number } };
+      
       console.error('Erro ao conectar com a API:', err);
       
       // Tratamento básico de erro para dar feedback na tela
-      if (err.response && err.response.status === 401) {
+      if (erroAxios.response && erroAxios.response.status === 401) {
         alert("E-mail ou senha incorretos.");
       } else {
         alert("Erro no servidor ou rota não encontrada. Verifique o backend.");
-      }
+      }    
     } finally {
       setIsLoading(false);
     }
