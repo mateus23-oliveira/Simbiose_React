@@ -54,8 +54,8 @@ export default function AnimalCard({ animal, onEdit, onDelete }: Props) {
         <Name>{animal.nome}</Name>
         <Desc>{animal.descricao}</Desc>
         <Meta>
-          {animal.habitat && <MetaTag>🌿 {animal.habitat}</MetaTag>}
-          {animal.tempoVida && <MetaTag>⏳ {animal.tempoVida} anos</MetaTag>}
+          {!!animal.habitat && <MetaTag>🌿 {animal.habitat}</MetaTag>}
+          {!!animal.tempoVida && <MetaTag>⏳ {animal.tempoVida} anos</MetaTag>}
         </Meta>
         <Actions>
           <EditBtn onClick={onEdit}>Editar</EditBtn>
