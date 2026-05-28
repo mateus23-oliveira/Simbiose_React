@@ -1,17 +1,17 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { loginRequest } from "../services/authService";
-import type { LoginData, LoginResponse } from "../services/authService";
+import type { LoginData, Usuario } from "../services/authService";
 import { AuthContext } from "./authContextObject";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-function getStoredUser(): LoginResponse["usuario"] | null {
-  const storedUser = localStorage.getItem("user");
-  if (!storedUser) return null;
-  return JSON.parse(storedUser);
+function getStoredUser(): Usuario | null {
+  const stored = localStorage.getItem("user");
+  if (!stored) return null;
+  return JSON.parse(stored);
 }
 
 function getStoredToken(): string | null {
@@ -19,7 +19,7 @@ function getStoredToken(): string | null {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [usuario, setUsuario] = useState<LoginResponse["usuario"] | null>(getStoredUser);
+  const [usuario, setUsuario] = useState<Usuario | null>(getStoredUser);
   const [token, setToken] = useState<string | null>(getStoredToken);
 
   const isAuthenticated = !!usuario && !!token;
