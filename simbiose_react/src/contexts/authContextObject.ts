@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import type { LoginData, LoginResponse } from "../services/authService";
+import type { LoginData, Usuario } from "../services/authService";
 
 interface AuthContextData {
-  usuario: LoginResponse["usuario"] | null;
+  usuario: Usuario | null;
   token: string | null;
   isAuthenticated: boolean;
   signIn: (data: LoginData) => Promise<void>;
